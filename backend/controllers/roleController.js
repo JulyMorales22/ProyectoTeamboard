@@ -12,7 +12,7 @@ const registerRole = async (req, res) => {
     //schema es un objeto con todo lo de role y se usa la misma palabra que usemos en el import
     name: req.body.name, //lo que necesitaba el constructor de role y se pasa lo que viene en el JSON
     description: req.body.description,
-    dbStatus:true
+    dbStatus: true,
   });
 
   let result = await schema.save(); // enviamos a guardar schema
@@ -22,4 +22,13 @@ const registerRole = async (req, res) => {
   res.status(200).send({ result });
 };
 
-export default { registerRole };
+const listRole = async (req, res) => {
+  let roles = await role.find();
+
+  if (roles.length === 0)
+    return res.status(400).send({ message: "No search results" });
+
+  return res.status(200).send({ roles });
+};
+
+export default { registerRole, listRole };
